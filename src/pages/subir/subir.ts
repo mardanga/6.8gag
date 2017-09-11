@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'page-subir',
@@ -7,8 +7,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SubirPage {
 
-  constructor() {
+  constructor( private viewCtrl: ViewController ) {
   }
 
+  cerrar(){
+    this.viewCtrl.dismiss();
+  }
 
 }

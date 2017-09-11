@@ -7,12 +7,39 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>subir</ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="cerrar()">Cerrar</button>
+    </ion-buttons>
+    <ion-title>Crear Post</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
-
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Titulo</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <img src="https://www.cinemascomics.com/wp-content/uploads/2011/08/cabeza_mazinger_z.jpg" />
+    </ion-item>
+  </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button block ion-button icon-left>
+          <ion-icon name="photos" ></ion-icon>
+          Cargar
+        </button>
+      </ion-col>
+    <ion-col>
+        <button block ion-button icon-left>
+          <ion-icon name="camera" ></ion-icon>
+          Camara
+        </button>
+    
+      </ion-col>
+    </ion-row>
+    
+  </ion-grid>
 </ion-content>

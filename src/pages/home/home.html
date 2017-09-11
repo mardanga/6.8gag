@@ -7,7 +7,26 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-card>
+    <img src="https://www.cinemascomics.com/wp-content/uploads/2011/08/cabeza_mazinger_z.jpg" />
+    <ion-card-content>
+      <ion-card-title>
+        Post 1
+      </ion-card-title>
+    </ion-card-content>
+    <ion-row>
+      <ion-col text-right>
+        <button ion-button small clear icon-left>
+            <ion-icon name='share-alt'></ion-icon>
+            Compartir
+          </button>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
   <ion-fab bottom right >
-    <button ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="danger" (click)="postear()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>
