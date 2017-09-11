@@ -8,11 +8,11 @@
 
 <ion-content>
 
-  <ion-card>
-    <img src="https://www.cinemascomics.com/wp-content/uploads/2011/08/cabeza_mazinger_z.jpg" />
+  <ion-card *ngFor="let post of posts | async">
+    <img [src]="post.img" />
     <ion-card-content>
       <ion-card-title>
-        Post 1
+        {{post.titulo}}
       </ion-card-title>
     </ion-card-content>
     <ion-row>
