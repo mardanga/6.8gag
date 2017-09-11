@@ -10,7 +10,7 @@
     <ion-buttons start>
       <button ion-button (click)="cerrar()">Cerrar</button>
     </ion-buttons>
-    <ion-title>Crear Post</ion-title>
+    <ion-title>{{titulo | placeholder:'Crear Post'}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -18,7 +18,7 @@
   <ion-list>
     <ion-item>
       <ion-label floating>Titulo</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" [(ngModel)]="titulo"></ion-input>
     </ion-item>
     <ion-item>
       <img src="https://www.cinemascomics.com/wp-content/uploads/2011/08/cabeza_mazinger_z.jpg" />
