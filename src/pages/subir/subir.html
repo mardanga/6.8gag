@@ -20,8 +20,8 @@
       <ion-label floating>Titulo</ion-label>
       <ion-input type="text" [(ngModel)]="titulo"></ion-input>
     </ion-item>
-    <ion-item>
-      <img src="https://www.cinemascomics.com/wp-content/uploads/2011/08/cabeza_mazinger_z.jpg" />
+    <ion-item *ngIf="imgPreview">
+      <img [src]="imgPreview" />
     </ion-item>
   </ion-list>
   <ion-grid>
@@ -33,7 +33,9 @@
         </button>
       </ion-col>
     <ion-col>
-        <button block ion-button icon-left>
+        <button block ion-button icon-left
+        (click)='mostrarCamara()'
+        >
           <ion-icon name="camera" ></ion-icon>
           Camara
         </button>
