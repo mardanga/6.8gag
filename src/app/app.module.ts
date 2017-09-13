@@ -20,7 +20,7 @@ import { FIREBASECONFIG } from "../config/config";
 import { PlaceholderPipe } from '../pipes/placeholder/placeholder'
 
 // plugins
-// import { ImagePicker } from '@ionic-native/image-picker';
+ import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
 
 @NgModule({
@@ -36,7 +36,7 @@ import { Camera } from '@ionic-native/camera';
     AngularFireModule.initializeApp(FIREBASECONFIG),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    // ImagePicker
+     
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +48,8 @@ import { Camera } from '@ionic-native/camera';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Camera
+    Camera,
+    ImagePicker
   ]
 })
 export class AppModule {}
