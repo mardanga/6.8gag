@@ -20,8 +20,11 @@ import { FIREBASECONFIG } from "../config/config";
 import { PlaceholderPipe } from '../pipes/placeholder/placeholder'
 
 // plugins
- import { ImagePicker } from '@ionic-native/image-picker';
+import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
+
+// services
+import { SubirArchivoService } from '../providers/subir-archivo-service/subir-archivo-service';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,8 @@ import { Camera } from '@ionic-native/camera';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
-    ImagePicker
+    ImagePicker,
+    SubirArchivoService
   ]
 })
 export class AppModule {}
