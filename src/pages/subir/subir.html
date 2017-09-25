@@ -7,6 +7,11 @@
 <ion-header>
 
   <ion-navbar>
+    
+
+    <ion-buttons end>
+      <button ion-button (click)="crear_post()" [disabled]=" titulo.length < 2 || imgData.length < 2 ">Crear Post</button>
+    </ion-buttons>
     <ion-buttons start>
       <button ion-button (click)="cerrar()">Cerrar</button>
     </ion-buttons>

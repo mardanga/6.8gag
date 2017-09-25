@@ -1,10 +1,12 @@
+import { SubirArchivoService } from './../../providers/subir-archivo-service/subir-archivo-service';
 import { PlaceholderPipe } from './../../pipes/placeholder/placeholder';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, ToastController, Platform, LoadingController } from 'ionic-angular';
 
 // plugins
  import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { IArchivoSubir } from "../../Interfaces/IArchivoSubir";
 
 @Component({
   selector: 'page-subir',
@@ -13,14 +15,16 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 export class SubirPage {
 
   imgPreview = null;
-  imgData = null;
-  titulo: string;
+  imgData = "";
+  titulo: string= "";
 
   constructor( private viewCtrl: ViewController, 
               private camera: Camera,
               private toastCtrl: ToastController,
               private platform: Platform,
-              private imagePicker: ImagePicker
+              private imagePicker: ImagePicker,
+              private loadingCtrl: LoadingController,
+              private caf: SubirArchivoService
 
             ) {
   }
@@ -29,7 +33,7 @@ export class SubirPage {
     this.viewCtrl.dismiss();
   }
 
-  mostrarGaleria() {
+  mostrarGaleria () {
     if(!this.platform.is('cordova')){
       this.showToast("Estas en un navegador");
       return;
@@ -85,4 +89,29 @@ export class SubirPage {
 
   }
 
+  crear_post (){
+    let archivo: IArchivoSubir = {
+      titulo: this.titulo,
+      archivo: this.imgData
+    }
+
+    let loader = this.loadingCtrl.create({
+        content: "Publicando..."
+      }     
+    );
+
+    this.caf.cargarArchivo(archivo)
+      .then(
+        ()=> {
+          loader.dismiss();
+          this.cerrar();
+        },
+        (error)=> {
+          loader.dismiss();
+          this.showToast(
+            "Error: " + JSON.stringify(error)
+          );
+        }
+      );
+  }
 }   
