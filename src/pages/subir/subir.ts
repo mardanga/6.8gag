@@ -1,7 +1,6 @@
 import { SubirArchivoService } from './../../providers/subir-archivo-service/subir-archivo-service';
-import { PlaceholderPipe } from './../../pipes/placeholder/placeholder';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, ToastController, Platform, LoadingController } from 'ionic-angular';
+import { ViewController, ToastController, Platform, LoadingController } from 'ionic-angular';
 
 // plugins
  import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker';
@@ -35,7 +34,7 @@ export class SubirPage {
 
   mostrarGaleria () {
     if(!this.platform.is('cordova')){
-      this.showToast("Estas en un navegador");
+      this.showToast("Error: Estas en un navegador");
       return;
     }
     let options: ImagePickerOptions = {
@@ -59,7 +58,7 @@ export class SubirPage {
 
   mostrarCamara(){
     if(!this.platform.is('cordova')){
-      this.showToast("Estas en un navegador");
+      this.showToast("Error: Estas en un navegador");
       return;
     }
 
@@ -81,7 +80,7 @@ export class SubirPage {
   }
 
   showToast(msg:string){
-    let tast = this.toastCtrl.create({
+    this.toastCtrl.create({
       duration: 3000,
       position: 'bottom',
       message: msg
@@ -92,13 +91,14 @@ export class SubirPage {
   crear_post (){
     let archivo: IArchivoSubir = {
       titulo: this.titulo,
-      archivo: this.imgData
+      img: this.imgData
     }
 
     let loader = this.loadingCtrl.create({
         content: "Publicando..."
       }     
     );
+    loader.present();
 
     this.caf.cargarArchivo(archivo)
       .then(

@@ -1,7 +1,7 @@
 export interface IArchivoSubir
 {
     key$?: string,
-    archivo: string,
+    img: string,
     titulo: string
 
 }

@@ -1,6 +1,5 @@
 import { IArchivoSubir } from './../../Interfaces/IArchivoSubir';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { AngularFireDatabase } from 'angularfire2/database';
 import * as firebase from 'firebase'
@@ -21,12 +20,11 @@ export class SubirArchivoService {
 
   cargarArchivo(archivo: IArchivoSubir){
     let promesa = new Promise ((resolve, reject) => {
-        this.showToast('Inicio carga de imagen');
+        
         let storage  = firebase.storage().ref();
         let nombreArchivo = new Date().valueOf();
         let ut: firebase.storage.UploadTask = storage.child(this.CARPETA +'/' + nombreArchivo).
-          putString(archivo.archivo, 'base64', {contentType: 'image/jpeg'});
-        
+          putString(archivo.img, 'base64', {contentType: 'image/jpeg'});
         ut.on(firebase.storage.TaskEvent.STATE_CHANGED, 
         (snapshot)=> {},//change
         (error)=> {
@@ -36,14 +34,11 @@ export class SubirArchivoService {
         },//error
         ()=> {
           let url = ut.snapshot.downloadURL;
-          this.showToast('Imagen subida');
           this.crearPost(archivo.titulo, url);
           resolve();
         } //complete
         );
-
     });
-
     return promesa;
   }
 
@@ -51,17 +46,17 @@ export class SubirArchivoService {
   {
     let post: IArchivoSubir= {
       titulo: titulo,
-      archivo: url
+      img: url
     }
-
-    post.key$ = this.af.list('/' + post).push(post).key;
+    this.showToast('Creando post');
+    post.key$ = this.af.list('/' + this.POST).push(post).key;
     this.imagenes.push(post);
   }
 
 
-  showToast(msg:string){
-    let tast = this.toastCtrl.create({
-      duration: 3000,
+  showToast(msg:string, time: number = 3000){
+    this.toastCtrl.create({
+      duration: time,
       position: 'bottom',
       message: msg
     }).present();
