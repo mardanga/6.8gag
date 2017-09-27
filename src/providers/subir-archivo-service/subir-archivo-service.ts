@@ -50,7 +50,7 @@ export class SubirArchivoService {
     }
     this.showToast('Creando post');
     post.key$ = this.af.list('/' + this.POST).push(post).key;
-    this.imagenes.push(post);
+    this.imagenes.unshift(post);
   }
 
 
@@ -73,7 +73,7 @@ export class SubirArchivoService {
       }).subscribe(
         posts=>{
           if(this.lastKey){
-            //posts.pop();
+            posts.pop();
           }
 
           if(posts.length == 0){
@@ -81,11 +81,13 @@ export class SubirArchivoService {
             resolve(false);
             return;
           }
-          console.log(posts);
+          
             
-          this.lastKey = posts[0].key$;
+          this.lastKey = posts[0].$key;
+          
           for (var index = posts.length-1; index >= 0; index--) {
-            this.imagenes.push(posts[index]);            
+            let post = posts[index];
+            this.imagenes.push(post);            
           }
           resolve(true);
             

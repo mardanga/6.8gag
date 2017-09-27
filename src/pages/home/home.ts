@@ -11,15 +11,18 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 })
 export class HomePage {
 
-  posts = []; //FirebaseListObservable<any[]>;
+  hayMasPost = true;
+
+  //posts: FirebaseListObservable<any[]>;
   constructor(private modalCrl: ModalController, 
-  //private afDB: AngularFireDatabase,
-  private subirSrv: SubirArchivoService, 
-  private toastCtrl: ToastController,
+    //private afDB: AngularFireDatabase, 
+    private subirSrv: SubirArchivoService,
+    private toastCtrl: ToastController,
 ) {
     //this.posts = this.afDB.list('/posts');
-    this.subirSrv.cargarImagenes();  
+    this.subirSrv.cargarImagenes();
   }
+
   postear() {
     let modal = this.modalCrl.create(SubirPage) ;
     modal.present();
@@ -32,5 +35,16 @@ export class HomePage {
       position: 'bottom',
       message: msg
     }).present();
+  }
+
+  cargarMas(infiniteScroll){
+    this.subirSrv.cargarImagenes()
+    .then(
+      (haymas:boolean)=> {
+        this.hayMasPost = haymas;
+        infiniteScroll.complete();
+      }
+    );
+
   }
 }

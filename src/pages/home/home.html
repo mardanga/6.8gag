@@ -28,7 +28,9 @@
   </ion-card>
 
   <ion-fab bottom right >
-    <button ion-fab color="danger" (click)="postear()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab color="danger" (click)="postear()" ><ion-icon name="add" ></ion-icon></button>
   </ion-fab>
-  
+  <ion-infinite-scroll (ionInfinite)="cargarMas($event)" [enabled]="hayMasPost">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
 </ion-content>
