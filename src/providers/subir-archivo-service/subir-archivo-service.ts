@@ -12,7 +12,7 @@ export class SubirArchivoService {
   private POST = "posts";
 
   imagenes: any[] = [];
-  lastKey: string =null;
+  lastKey: string =undefined;
 
   constructor(private af: AngularFireDatabase, private toastCtrl: ToastController) {
    
@@ -60,5 +60,37 @@ export class SubirArchivoService {
       position: 'bottom',
       message: msg
     }).present();
+  }
+
+  cargarImagenes(){
+    return new Promise((resolve, reject) => {
+      this.af.list('/' + this.POST, {
+        query: {
+          endAt: this.lastKey,
+          limitToLast: 4,
+          orderByKey: true
+        }  
+      }).subscribe(
+        posts=>{
+          if(this.lastKey){
+            //posts.pop();
+          }
+
+          if(posts.length == 0){
+            console.log('No hay mas posts');
+            resolve(false);
+            return;
+          }
+          console.log(posts);
+            
+          this.lastKey = posts[0].key$;
+          for (var index = posts.length-1; index >= 0; index--) {
+            this.imagenes.push(posts[index]);            
+          }
+          resolve(true);
+            
+        }
+      );
+    });
   }
 }

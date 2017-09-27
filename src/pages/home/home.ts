@@ -1,3 +1,4 @@
+import { SubirArchivoService } from './../../providers/subir-archivo-service/subir-archivo-service';
 import { SubirPage } from './../subir/subir';
 import { Component } from '@angular/core';
 import { ModalController, ToastController } from 'ionic-angular';
@@ -10,13 +11,15 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 })
 export class HomePage {
 
-  posts: FirebaseListObservable<any[]>;
-  constructor(private modalCrl: ModalController, private afDB: AngularFireDatabase, private toastCtrl: ToastController,
+  posts = []; //FirebaseListObservable<any[]>;
+  constructor(private modalCrl: ModalController, 
+  //private afDB: AngularFireDatabase,
+  private subirSrv: SubirArchivoService, 
+  private toastCtrl: ToastController,
 ) {
-    this.posts = this.afDB.list('/posts');
-    
+    //this.posts = this.afDB.list('/posts');
+    this.subirSrv.cargarImagenes();  
   }
-
   postear() {
     let modal = this.modalCrl.create(SubirPage) ;
     modal.present();
