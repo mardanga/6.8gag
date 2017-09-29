@@ -22,6 +22,7 @@ import { PlaceholderPipe } from '../pipes/placeholder/placeholder'
 // plugins
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 // services
 import { SubirArchivoService } from '../providers/subir-archivo-service/subir-archivo-service';
@@ -53,7 +54,8 @@ import { SubirArchivoService } from '../providers/subir-archivo-service/subir-ar
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
     ImagePicker,
-    SubirArchivoService
+    SubirArchivoService,
+    SocialSharing
   ]
 })
 export class AppModule {}

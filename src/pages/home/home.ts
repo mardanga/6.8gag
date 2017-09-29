@@ -3,7 +3,8 @@ import { SubirPage } from './../subir/subir';
 import { Component } from '@angular/core';
 import { ModalController, ToastController } from 'ionic-angular';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { IArchivoSubir } from "../../Interfaces/IArchivoSubir";
 
 @Component({
   selector: 'page-home',
@@ -18,6 +19,7 @@ export class HomePage {
     //private afDB: AngularFireDatabase, 
     private subirSrv: SubirArchivoService,
     private toastCtrl: ToastController,
+    private socialSharing: SocialSharing
 ) {
     //this.posts = this.afDB.list('/posts');
     this.subirSrv.cargarImagenes();
@@ -46,5 +48,14 @@ export class HomePage {
       }
     );
 
+  }
+
+  compartir(post: IArchivoSubir){
+    this.socialSharing.shareViaFacebookWithPasteMessageHint(post.titulo, post.img).then(() => {
+      this.showToast("Compartido exitosamente!!!");
+}).catch((error) => {
+  this.showToast("Error al compartir:" + error);
+
+});
   }
 }
