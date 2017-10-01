@@ -15,23 +15,23 @@ export class HomePage {
   hayMasPost = true;
 
   //posts: FirebaseListObservable<any[]>;
-  constructor(private modalCrl: ModalController, 
+  constructor(private modalCrl: ModalController,
     //private afDB: AngularFireDatabase, 
     private subirSrv: SubirArchivoService,
     private toastCtrl: ToastController,
     private socialSharing: SocialSharing
-) {
+  ) {
     //this.posts = this.afDB.list('/posts');
     this.subirSrv.cargarImagenes();
   }
 
   postear() {
-    let modal = this.modalCrl.create(SubirPage) ;
+    let modal = this.modalCrl.create(SubirPage);
     modal.present();
     //this.showToast("modal");
   }
 
-   showToast(msg:string){
+  showToast(msg: string) {
     this.toastCtrl.create({
       duration: 3000,
       position: 'bottom',
@@ -39,23 +39,44 @@ export class HomePage {
     }).present();
   }
 
-  cargarMas(infiniteScroll){
+  cargarMas(infiniteScroll) {
     this.subirSrv.cargarImagenes()
-    .then(
-      (haymas:boolean)=> {
+      .then(
+      (haymas: boolean) => {
         this.hayMasPost = haymas;
         infiniteScroll.complete();
       }
-    );
+      );
 
   }
 
-  compartir(post: IArchivoSubir){
-    this.socialSharing.shareViaFacebookWithPasteMessageHint(post.titulo, post.img).then(() => {
-      this.showToast("Compartido exitosamente!!!");
-}).catch((error) => {
-  this.showToast("Error al compartir:" + error);
+  compartir(post: IArchivoSubir) {
+    this.convertToDataURLviaCanvas(post.img, "image/jpeg").then(urldeimagen => {
+      let urlbase64 = String(urldeimagen);
+      this.socialSharing.share("8gag sharing", post.titulo, urlbase64, null).then(() => {
+        this.showToast("Compartido exitosamente!!!");
+      }).catch((error) => {
+        this.showToast("Error al compartir:" + error);
+      });
+    });
 
-});
+  }
+
+  convertToDataURLviaCanvas(url, outputFormat) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = () => {
+        let canvas = <HTMLCanvasElement>document.createElement('CANVAS'),
+          ctx = canvas.getContext('2d'), dataURL;
+        canvas.height = img.height;
+        canvas.width = img.width;
+        ctx.drawImage(img, 0, 0);
+        dataURL = canvas.toDataURL(outputFormat);
+        resolve(dataURL);
+        canvas = null;
+      };
+      img.src = url;
+    });
   }
 }
